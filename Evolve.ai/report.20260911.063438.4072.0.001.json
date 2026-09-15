@@ -1,0 +1,624 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20260911.063438.4072.0.001.json",
+    "dumpEventTime": "2026-09-11T06:34:38Z",
+    "dumpEventTimeStamp": "1789090478588",
+    "processId": 4072,
+    "cwd": "C:\\Users\\UCC\\Desktop\\Evolve.ai",
+    "commandLine": [
+      "C:\\Program Files\\nodejs\\\\node.exe",
+      "C:\\Program Files\\nodejs\\\\node_modules\\npm\\bin\\npx-cli.js",
+      "localtunnel",
+      "--port",
+      "5000"
+    ],
+    "nodejsVersion": "v13.6.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "13.6.0",
+      "v8": "7.9.317.25-node.26",
+      "uv": "1.34.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "79",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.1",
+      "openssl": "1.1.1d",
+      "cldr": "36.0",
+      "icu": "65.1",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v13.6.0/node-v13.6.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v13.6.0/node-v13.6.0.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v13.6.0/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "6.1.7601",
+    "osVersion": "Windows 7 Professional Service Pack 1",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i3-4000M CPU @ 2.40GHz",
+        "speed": 2394,
+        "user": 3961052,
+        "nice": 0,
+        "sys": 1506501,
+        "idle": 14452338,
+        "irq": 18049
+      },
+      {
+        "model": "Intel(R) Core(TM) i3-4000M CPU @ 2.40GHz",
+        "speed": 2394,
+        "user": 1140180,
+        "nice": 0,
+        "sys": 689742,
+        "idle": 18089454,
+        "irq": 249039
+      },
+      {
+        "model": "Intel(R) Core(TM) i3-4000M CPU @ 2.40GHz",
+        "speed": 2394,
+        "user": 3316565,
+        "nice": 0,
+        "sys": 1660225,
+        "idle": 14942462,
+        "irq": 8112
+      },
+      {
+        "model": "Intel(R) Core(TM) i3-4000M CPU @ 2.40GHz",
+        "speed": 2394,
+        "user": 689852,
+        "nice": 0,
+        "sys": 154862,
+        "idle": 19074413,
+        "irq": 6973
+      }
+    ],
+    "host": "UCC-PC"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x000000013ff81be9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000013ff85f5c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000013ff84f18",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000014007f84b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001408a7b7e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000014088f2d1",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000014075655c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000014075e5bb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140753aa3",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140752234",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140774304",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001404ce5c1",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140cf10dd",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c78cda",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d617e4",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d0d439",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d0d439",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c78747",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d5c83b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7871e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d5c83b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d03a09",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d03a09",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d03a09",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d03a09",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140d03a09",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7c9fb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c765f9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7a55e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140c7a14c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001407b2352",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001407b1cc9",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001408857b0",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001400fc148",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001400fc607",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001400fc70b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001400fc51b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000014002937c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001400f745d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140049be1",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001400a6dd0",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000013ff56abc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000000140daeae8",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000007760570d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000000007776385d",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 7970816,
+    "totalCommittedMemory": 7970816,
+    "usedMemory": 6660920,
+    "availableMemory": 939264208,
+    "memoryLimit": 945553408,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 33040,
+        "used": 33040,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 1048576,
+        "committedMemory": 1048576,
+        "capacity": 1047424,
+        "used": 1047368,
+        "available": 56
+      },
+      "old_space": {
+        "memorySize": 4857856,
+        "committedMemory": 4857856,
+        "capacity": 4641728,
+        "used": 4407272,
+        "available": 234456
+      },
+      "code_space": {
+        "memorySize": 430080,
+        "committedMemory": 430080,
+        "capacity": 257888,
+        "used": 237952,
+        "available": 19936
+      },
+      "map_space": {
+        "memorySize": 790528,
+        "committedMemory": 790528,
+        "capacity": 787904,
+        "used": 408160,
+        "available": 379744
+      },
+      "large_object_space": {
+        "memorySize": 532480,
+        "committedMemory": 532480,
+        "capacity": 524344,
+        "used": 524344,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 2784,
+        "used": 2784,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1047424,
+        "used": 0,
+        "available": 1047424
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 0.811,
+    "kernelCpuSeconds": 0.514,
+    "cpuConsumptionPercent": 0.160024,
+    "maxRss": 33472512,
+    "pageFaults": {
+      "IORequired": 15825,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 222,
+      "writes": 2
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "=C:": "C:\\Users\\UCC\\Desktop\\Evolve.ai",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "APPDATA": "C:\\Users\\UCC\\AppData\\Roaming",
+    "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\crashpad_1452_HMDYFZTJLRYPOFNQ",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "UCC-PC",
+    "ComSpec": "C:\\Windows\\system32\\cmd.exe",
+    "DBug": "No",
+    "DrvType": "SSD",
+    "FP_NO_HOST_CHECK": "NO",
+    "HiLiteCol": "Default",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\UCC",
+    "LOCALAPPDATA": "C:\\Users\\UCC\\AppData\\Local",
+    "LOGONSERVER": "\\\\UCC-PC",
+    "NODE_EXE": "C:\\Program Files\\nodejs\\\\node.exe",
+    "NoMD": "0",
+    "NPM_CLI_JS": "C:\\Program Files\\nodejs\\\\node_modules\\npm\\bin\\npm-cli.js",
+    "NPM_PREFIX_NPX_CLI_JS": "C:\\Users\\UCC\\Desktop\\Evolve.ai\\'~\\.npm-global'\\node_modules\\npm\\bin\\npx-cli.js",
+    "NPX_CLI_JS": "C:\\Program Files\\nodejs\\\\node_modules\\npm\\bin\\npx-cli.js",
+    "NUMBER_OF_PROCESSORS": "4",
+    "OEMsOK": "Yes",
+    "ORIGINAL_XDG_CURRENT_DESKTOP": "undefined",
+    "OS": "Windows_NT",
+    "OSEd": "Professional",
+    "Path": "C:\\Users\\UCC\\AppData\\Roaming\\npm-cache\\_npx\\4072;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\nodejs\\;C:\\Users\\UCC\\AppData\\Local\\Programs\\Python\\Python38\\Scripts\\;C:\\Users\\UCC\\AppData\\Local\\Programs\\Python\\Python38\\;C:\\Users\\UCC\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\UCC\\AppData\\Roaming\\npm",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 60 Stepping 3, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "3c03",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PSModulePath": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\",
+    "PUBLIC": "C:\\Users\\Public",
+    "SESSIONNAME": "Console",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\Windows",
+    "TEMP": "C:\\Users\\UCC\\AppData\\Local\\Temp",
+    "TMP": "C:\\Users\\UCC\\AppData\\Local\\Temp",
+    "USERDOMAIN": "UCC-PC",
+    "USERNAME": "UCC",
+    "USERPROFILE": "C:\\Users\\UCC",
+    "windir": "C:\\Windows",
+    "windows_tracing_flags": "3",
+    "windows_tracing_logfile": "C:\\BVTBin\\Tests\\installpackage\\csilogfile.log",
+    "TERM_PROGRAM": "vscode",
+    "TERM_PROGRAM_VERSION": "1.70.2",
+    "LANG": "en_US.UTF-8",
+    "COLORTERM": "truecolor"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\Windows\\SYSTEM32\\ntdll.dll",
+    "C:\\Windows\\system32\\kernel32.dll",
+    "C:\\Windows\\system32\\KERNELBASE.dll",
+    "C:\\Windows\\system32\\dbghelp.dll",
+    "C:\\Windows\\system32\\msvcrt.dll",
+    "C:\\Windows\\system32\\WS2_32.dll",
+    "C:\\Windows\\system32\\RPCRT4.dll",
+    "C:\\Windows\\system32\\NSI.dll",
+    "C:\\Windows\\system32\\IPHLPAPI.DLL",
+    "C:\\Windows\\system32\\WINNSI.DLL",
+    "C:\\Windows\\system32\\PSAPI.DLL",
+    "C:\\Windows\\system32\\USERENV.dll",
+    "C:\\Windows\\system32\\profapi.dll",
+    "C:\\Windows\\system32\\ADVAPI32.dll",
+    "C:\\Windows\\SYSTEM32\\sechost.dll",
+    "C:\\Windows\\system32\\USER32.dll",
+    "C:\\Windows\\system32\\GDI32.dll",
+    "C:\\Windows\\system32\\LPK.dll",
+    "C:\\Windows\\system32\\USP10.dll",
+    "C:\\Windows\\system32\\CRYPT32.dll",
+    "C:\\Windows\\system32\\MSASN1.dll",
+    "C:\\Windows\\system32\\bcrypt.dll",
+    "C:\\Windows\\system32\\WINMM.dll",
+    "C:\\Windows\\system32\\IMM32.DLL",
+    "C:\\Windows\\system32\\MSCTF.dll",
+    "C:\\Windows\\system32\\api-ms-win-core-synch-l1-2-0.DLL",
+    "C:\\Windows\\system32\\powrprof.dll",
+    "C:\\Windows\\system32\\SETUPAPI.dll",
+    "C:\\Windows\\system32\\CFGMGR32.dll",
+    "C:\\Windows\\system32\\OLEAUT32.dll",
+    "C:\\Windows\\system32\\ole32.dll",
+    "C:\\Windows\\system32\\DEVOBJ.dll",
+    "C:\\Windows\\system32\\uxtheme.dll",
+    "C:\\Windows\\system32\\mswsock.dll",
+    "C:\\Windows\\System32\\wshtcpip.dll",
+    "C:\\Windows\\System32\\wship6.dll",
+    "C:\\Windows\\system32\\bcryptprimitives.dll",
+    "C:\\Windows\\system32\\apphelp.dll",
+    "C:\\Windows\\system32\\dhcpcsvc.DLL",
+    "C:\\Windows\\system32\\dhcpcsvc6.DLL",
+    "C:\\Windows\\system32\\NLAapi.dll",
+    "C:\\Windows\\system32\\napinsp.dll",
+    "C:\\Windows\\system32\\pnrpnsp.dll",
+    "C:\\Windows\\system32\\DNSAPI.dll",
+    "C:\\Windows\\System32\\winrnr.dll",
+    "C:\\Windows\\system32\\wshbth.dll",
+    "C:\\Windows\\system32\\cryptbase.dll",
+    "C:\\Windows\\system32\\rasadhlp.dll",
+    "C:\\Windows\\System32\\fwpuclnt.dll"
+  ]
+}

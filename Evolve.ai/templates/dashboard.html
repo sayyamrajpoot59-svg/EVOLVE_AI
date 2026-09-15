@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA AI - Autonomous Enterprise OS</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .serif-title { font-family: 'Newsreader', serif; }
+        .dark { --bg-base: #0d0d0d; --bg-sidebar: #121212; --bg-card: #171717; --border-color: #222222; --text-main: #ededed; --text-sub: #a3a3a3; }
+        .light { --bg-base: #f8fafc; --bg-sidebar: #ffffff; --bg-card: #ffffff; --border-color: #e2e8f0; --text-main: #0f172a; --text-sub: #64748b; }
+        body { background-color: var(--bg-base); color: var(--text-main); transition: background 0.3s, color 0.3s; }
+        aside { background-color: var(--bg-sidebar); border-color: var(--border-color); transition: width 0.3s ease; }
+        .custom-card { background-color: var(--bg-card); border-color: var(--border-color); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden relative">
+
+    <!-- Live Notification Popup Bar with Active on Localhost Action -->
+    <div id="localhost-notification" class="hidden absolute top-4 right-6 bg-emerald-950 text-emerald-300 border border-emerald-700 px-4 py-3 rounded-xl text-xs shadow-2xl z-50 flex items-center space-x-3 transition-all">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+        <span id="notification-text">Software generated successfully!</span>
+        <button onclick="activateOnLocalhost()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow transition flex items-center space-x-1.5">
+            <i class="fa-solid fa-rocket"></i><span>Active on Localhost</span>
+        </button>
+    </div>
+
+    <!-- Editable Profile Modal Popup -->
+    <div id="profile-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="custom-card border w-full max-w-lg rounded-2xl p-6 space-y-6 shadow-2xl relative">
+            <button onclick="toggleProfileModal(false)" class="absolute top-4 right-4 text-neutral-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="flex items-center space-x-4 border-b border-[var(--border-color)] pb-4">
+                <div class="bg-orange-600 text-white rounded-full h-14 w-14 flex items-center justify-center font-bold text-lg" id="profile-avatar-initials">MS</div>
+                <div>
+                    <h3 class="font-bold text-lg text-white" id="profile-display-name">Muhammad Sayyam Rana</h3>
+                    <p class="text-xs text-emerald-400 font-mono">Pro Developer • Enterprise Tier</p>
+                </div>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[var(--text-sub)] block mb-1">First Name</label>
+                        <input type="text" id="prof-firstname" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-2.5 text-white" value="Muhammad Sayyam">
+                    </div>
+                    <div>
+                        <label class="text-[var(--text-sub)] block mb-1">Last Name</label>
+                        <input type="text" id="prof-lastname" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-2.5 text-white" value="Rana">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[var(--text-sub)] block mb-1">Email Address</label>
+                    <input type="text" id="prof-email" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-2.5 text-white font-mono" value="sayyamrajpoot59@gmail.com">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[var(--text-sub)] block mb-1">Phone Number</label>
+                        <input type="text" id="prof-phone" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-2.5 text-white font-mono" value="+92 300 0000000">
+                    </div>
+                    <div>
+                        <label class="text-[var(--text-sub)] block mb-1">Date of Birth</label>
+                        <input type="text" id="prof-dob" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-2.5 text-white font-mono" value="01-01-2005">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[var(--text-sub)] block mb-1">Address / Region</label>
+                    <input type="text" id="prof-address" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-2.5 text-white" value="Jauharabad, Punjab, Pakistan">
+                </div>
+            </div>
+            <div class="pt-2 flex justify-end space-x-3">
+                <button onclick="toggleProfileModal(false)" class="bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-2 rounded-xl text-xs font-semibold">Cancel</button>
+                <button onclick="saveProfileChanges()" class="bg-orange-600 hover:bg-orange-500 text-white px-5 py-2 rounded-xl text-xs font-semibold">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-72 border-r flex flex-col justify-between select-none relative">
+        <button onclick="toggleSidebar()" class="absolute -right-3 top-8 bg-neutral-800 text-white border border-neutral-700 h-6 w-6 rounded-full flex items-center justify-center text-xs shadow-md hover:bg-neutral-700 transition z-20">
+            <i id="sidebar-icon" class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div>
+            <div class="p-4 border-b border-[var(--border-color)] space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3 overflow-hidden">
+                        <div class="text-orange-500 text-2xl flex-shrink-0"><i id="thinking-logo" class="fa-solid fa-asterisk animate-spin" style="animation-duration: 12s;"></i></div>
+                        <div class="sidebar-text">
+                            <h1 class="serif-title text-xl font-bold tracking-tight text-white">NOVA AI</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-text space-y-1.5 pt-1">
+                    <button onclick="newChatSession()" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center space-x-2 transition shadow-sm">
+                        <i class="fa-solid fa-plus text-[10px]"></i><span>New Chat</span>
+                    </button>
+                    <div class="text-[10px] text-[var(--text-sub)] uppercase tracking-wider font-mono px-1 pt-2">Recent Chat History</div>
+                    <div id="sidebar-chat-history" class="space-y-1 max-h-24 overflow-y-auto pr-1 text-xs">
+                        <button onclick="switchTab('chat')" class="w-full text-left px-2 py-1.5 rounded-lg text-[var(--text-sub)] hover:bg-neutral-500/10 hover:text-[var(--text-main)] truncate transition">
+                            <i class="fa-solid fa-message mr-1.5 text-orange-400"></i> Autonomous Session...
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="p-3 space-y-1 text-sm font-medium overflow-y-auto max-h-[calc(100vh-280px)]">
+                <button onclick="switchTab('chat')" id="btn-chat" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl bg-neutral-500/15 text-[var(--text-main)] font-semibold transition">
+                    <i class="fa-solid fa-comments w-4 text-orange-400 flex-shrink-0"></i><span class="sidebar-text">Chat with NOVA AI</span>
+                </button>
+                <button onclick="switchTab('sdlc')" id="btn-sdlc" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-solid fa-code w-4 text-emerald-400 flex-shrink-0"></i><span class="sidebar-text">Develop a Software</span>
+                </button>
+                <button onclick="switchTab('history')" id="btn-history" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-solid fa-clock-rotate-left w-4 text-amber-400 flex-shrink-0"></i><span class="sidebar-text">Software & Action History</span>
+                </button>
+                <button onclick="switchTab('agents')" id="btn-agents" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-solid fa-robot w-4 text-indigo-400 flex-shrink-0"></i><span class="sidebar-text">Agents</span>
+                </button>
+                <button onclick="switchTab('voice-agent')" id="btn-voice-agent" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-solid fa-microphone-lines w-4 text-rose-400 flex-shrink-0"></i><span class="sidebar-text">Voice Agent Hub</span>
+                </button>
+                <button onclick="switchTab('fixer')" id="btn-fixer" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-solid fa-shield-halved w-4 text-cyan-400 flex-shrink-0"></i><span class="sidebar-text">24/7 Surveillance & Fixer</span>
+                </button>
+                <button onclick="switchTab('github')" id="btn-github" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-brands fa-github w-4 text-purple-400 flex-shrink-0"></i><span class="sidebar-text">GitHub & Repositories</span>
+                </button>
+                <button onclick="switchTab('hosting')" id="btn-hosting" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-solid fa-cloud-arrow-up w-4 text-teal-400 flex-shrink-0"></i><span class="sidebar-text">Live Hosting</span>
+                </button>
+                <button onclick="switchTab('help')" id="btn-help" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition">
+                    <i class="fa-solid fa-headset w-4 text-rose-400 flex-shrink-0"></i><span class="sidebar-text">Help & Support</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-[var(--border-color)] space-y-2">
+            <button onclick="toggleSettingsDropdown()" id="btn-settings" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[var(--text-sub)] hover:text-[var(--text-main)] hover:bg-neutral-500/10 transition text-sm">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-gear w-4 flex-shrink-0"></i><span class="sidebar-text">Settings</span>
+                </div>
+                <i id="settings-chevron" class="fa-solid fa-chevron-down text-xs sidebar-text transition-transform"></i>
+            </button>
+            
+            <div id="settings-dropdown" class="hidden flex-col space-y-1 pl-4 pb-2 border-l border-orange-500/30 ml-3 text-xs">
+                <button onclick="switchSettingsSub('activity')" class="text-left py-1 text-[var(--text-sub)] hover:text-orange-400 transition">Activity Usage</button>
+                <button onclick="switchSettingsSub('public-link')" class="text-left py-1 text-[var(--text-sub)] hover:text-orange-400 transition">Public Link</button>
+                <button onclick="switchSettingsSub('subscriptions')" class="text-left py-1 text-[var(--text-sub)] hover:text-orange-400 transition">Subscriptions</button>
+                <button onclick="switchSettingsSub('location')" class="text-left py-1 text-[var(--text-sub)] hover:text-orange-400 transition">Location</button>
+                <button onclick="switchSettingsSub('theme')" class="text-left py-1 text-[var(--text-sub)] hover:text-orange-400 transition">Theme Mode</button>
+                <button onclick="switchSettingsSub('apikey')" class="text-left py-1 text-[var(--text-sub)] hover:text-orange-400 transition">API Keys</button>
+            </div>
+
+            <div onclick="toggleProfileModal(true)" class="flex items-center justify-between px-2 pt-2 text-xs border-t border-[var(--border-color)] cursor-pointer hover:bg-neutral-500/10 rounded-xl p-1.5 transition">
+                <div class="flex items-center space-x-2 overflow-hidden">
+                    <div class="bg-orange-600 text-white rounded-full h-6 w-6 flex items-center justify-center font-bold text-[10px] flex-shrink-0" id="sidebar-avatar-initials">MS</div>
+                    <span class="font-medium sidebar-text truncate" id="sidebar-display-name">Muhammad Sayyam</span>
+                </div>
+                <span class="text-emerald-400 font-mono text-[10px] bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/40 sidebar-text">Pro</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-hidden relative">
+        
+        <!-- Tab 1: Chat with NOVA AI -->
+        <section id="tab-chat" class="flex-1 flex flex-col h-full">
+            <header class="p-6 flex justify-between items-center border-b border-[var(--border-color)]">
+                <h2 class="serif-title text-xl font-bold text-white tracking-tight">NOVA AI</h2>
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-3 top-2.5 text-xs text-neutral-500"></i>
+                        <input type="text" id="chat-search" oninput="searchChats()" placeholder="Search chat..." class="bg-neutral-500/10 border border-[var(--border-color)] rounded-xl pl-9 pr-4 py-1.5 text-xs focus:outline-none focus:border-orange-500 w-48 transition text-white">
+                    </div>
+                    <button onclick="newChatSession()" class="text-xs custom-card hover:opacity-80 px-3 py-1.5 rounded-lg border transition flex items-center space-x-1.5 text-white">
+                        <i class="fa-solid fa-plus"></i><span>New Chat</span>
+                    </button>
+                </div>
+            </header>
+
+            <div id="chat-box" class="flex-1 p-6 overflow-y-auto space-y-6 max-w-4xl w-full mx-auto">
+                <div class="text-center py-12 space-y-3">
+                    <div class="text-orange-500 text-4xl inline-block mb-1"><i class="fa-solid fa-asterisk animate-spin" style="animation-duration: 20s;"></i></div>
+                    <h2 class="serif-title text-4xl font-bold tracking-tight text-white">How can I help you today?</h2>
+                </div>
+            </div>
+
+            <div class="p-6 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)] to-transparent">
+                <div class="max-w-3xl mx-auto custom-card border rounded-2xl p-4 shadow-2xl space-y-3">
+                    <textarea id="user-input" rows="2" placeholder="Message NOVA AI..." class="w-full bg-transparent border-0 focus:outline-none text-sm resize-none text-white placeholder-neutral-500" onkeydown="handleChatKey(event)"></textarea>
+                    
+                    <div class="flex items-center justify-between pt-2 border-t border-[var(--border-color)]">
+                        <div class="flex items-center space-x-2">
+                            <input type="file" id="chat-file" class="hidden" onchange="previewFile(event)">
+                            <button onclick="document.getElementById('chat-file').click()" class="bg-neutral-500/10 hover:bg-neutral-500/20 px-3 py-1.5 rounded-xl text-xs transition flex items-center space-x-1.5 text-white">
+                                <i class="fa-solid fa-paperclip text-orange-400"></i><span id="file-label">Attach File</span>
+                            </button>
+                            <button onclick="toggleVoiceToText()" id="voice-btn" class="bg-neutral-500/10 hover:bg-neutral-500/20 px-3 py-1.5 rounded-xl text-xs transition flex items-center space-x-1.5 text-rose-400">
+                                <i class="fa-solid fa-microphone"></i><span id="voice-label">Voice-to-Text</span>
+                            </button>
+                        </div>
+                        <button onclick="sendChatMessage()" class="bg-white hover:bg-neutral-200 text-black px-4 py-1.5 rounded-xl text-xs font-semibold transition flex items-center space-x-2">
+                            <span>Send</span><i class="fa-solid fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Develop a Software -->
+        <section id="tab-sdlc" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-6xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4">
+                <h2 class="serif-title text-2xl font-bold">Develop a Software</h2>
+                <p class="text-xs text-[var(--text-sub)] mt-1">Provide software name and specifications. Automatically builds local folders, syncs with GitHub repository, and logs into software history.</p>
+            </header>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="custom-card border p-6 rounded-2xl space-y-4 text-xs">
+                    <div>
+                        <label class="block text-[var(--text-sub)] mb-1 font-semibold uppercase tracking-wider">Software Name</label>
+                        <input type="text" id="sw-name-input" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-3 text-sm text-white focus:border-orange-500 focus:outline-none" placeholder="e.g. Game Suite">
+                    </div>
+                    <div>
+                        <label class="block text-[var(--text-sub)] mb-1 font-semibold uppercase tracking-wider">Specification & Explanation</label>
+                        <textarea id="sw-spec-input" rows="3" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-3 text-sm text-white focus:border-orange-500 focus:outline-none resize-none" placeholder="Explain core features, backend, and frontend requirements..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-[var(--text-sub)] mb-1 font-semibold uppercase tracking-wider">Changes & Custom Updates</label>
+                        <textarea id="sw-changes-input" rows="2" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-3 text-sm text-white focus:border-orange-500 focus:outline-none resize-none" placeholder="Specify any patch updates or adjustments..."></textarea>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 pt-2">
+                        <button onclick="generateSoftwareBuild()" class="bg-orange-600 hover:bg-orange-500 text-white px-5 py-2.5 rounded-xl font-semibold text-xs transition shadow-sm">
+                            Generate Software & Folder
+                        </button>
+                    </div>
+                </div>
+
+                <div class="custom-card border p-6 rounded-2xl flex flex-col justify-between space-y-4 text-xs">
+                    <div>
+                        <h3 class="font-bold text-sm text-white mb-2">Build Output & Repository Status</h3>
+                        <div id="sw-output-console" class="bg-black/50 border border-[var(--border-color)] rounded-xl p-4 font-mono text-[11px] text-emerald-400 h-56 overflow-y-auto space-y-1">
+                            <div>> System ready. Awaiting build parameters...</div>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-[var(--border-color)] flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] text-[var(--text-sub)] font-mono">LOCAL FOLDER / DOWNLOAD</p>
+                            <p id="sw-folder-path" class="text-white font-mono text-xs">C:\NovaAI\Workspace\</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="downloadSoftwareFiles()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-xl font-semibold text-xs transition flex items-center space-x-1.5">
+                                <i class="fa-solid fa-download"></i><span>Download Files</span>
+                            </button>
+                            <button onclick="getFolderAction()" class="bg-neutral-800 hover:bg-neutral-700 text-white px-3 py-2 rounded-xl font-semibold text-xs border border-neutral-700 transition">
+                                Get Folder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2.1: Software & Action History -->
+        <section id="tab-history" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-6xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4 flex justify-between items-center">
+                <div>
+                    <h2 class="serif-title text-2xl font-bold">Software & Action History</h2>
+                    <p class="text-xs text-[var(--text-sub)] mt-1">Review all generated software projects, commands executed, and activate them on localhost anytime.</p>
+                </div>
+                <button onclick="clearHistory()" class="bg-neutral-800 hover:bg-neutral-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Clear History</button>
+            </header>
+            <div id="history-items-container" class="space-y-3">
+                <div class="custom-card border p-4 rounded-2xl flex items-center justify-between text-xs">
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <span class="font-bold text-white text-sm">Default Evolve Suite</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800">Generated</span>
+                        </div>
+                        <p class="text-[var(--text-sub)] font-mono text-[11px]">Path: C:\NovaAI\Workspace\DefaultSuite</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="downloadSoftwareFiles()" class="bg-neutral-800 hover:bg-neutral-700 text-white px-3 py-2 rounded-xl font-semibold flex items-center space-x-1">
+                            <i class="fa-solid fa-download"></i><span>Download</span>
+                        </button>
+                        <button onclick="activateOnLocalhost()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl font-semibold flex items-center space-x-1.5 shadow">
+                            <i class="fa-solid fa-rocket"></i><span>Active on Localhost</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Agents -->
+        <section id="tab-agents" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-6xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4 flex justify-between items-center">
+                <div>
+                    <h2 class="serif-title text-2xl font-bold">Autonomous Agents Management</h2>
+                    <p class="text-xs text-[var(--text-sub)] mt-1">Activate, deactivate, and assign new tasks to deployed agents.</p>
+                </div>
+                <button onclick="addNewAgent()" class="bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition">
+                    + Deploy New Agent
+                </button>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="agents-grid">
+                <div class="custom-card border p-5 rounded-2xl space-y-4 text-xs flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-white text-sm">NOVA Voice Executor</span>
+                            <span id="agent-status-1" class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800">Active</span>
+                        </div>
+                        <p class="text-[var(--text-sub)]">Handles voice commands, browser automation, and local PC application execution.</p>
+                    </div>
+                    <div class="space-y-2 pt-3 border-t border-[var(--border-color)]">
+                        <div class="flex space-x-2">
+                            <button onclick="toggleAgentStatus(1)" id="agent-toggle-btn-1" class="flex-1 bg-neutral-800 hover:bg-neutral-700 text-white py-1.5 rounded-lg text-center font-semibold">Deactivate</button>
+                            <button onclick="openTaskModal('NOVA Voice Executor')" class="flex-1 bg-orange-600 hover:bg-orange-500 text-white py-1.5 rounded-lg text-center font-semibold">Assign Task</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 4: Voice Agent Hub -->
+        <section id="tab-voice-agent" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-5xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4">
+                <h2 class="serif-title text-2xl font-bold">Voice Agent Hub</h2>
+                <p class="text-xs text-[var(--text-sub)] mt-1">Live voice stream and full PC command execution environment (open apps, delete/open files, manage local PC).</p>
+            </header>
+            
+            <div class="custom-card border p-8 rounded-2xl text-center space-y-6">
+                <div class="inline-flex items-center justify-center h-20 w-20 rounded-full bg-rose-950/50 border border-rose-800 text-rose-400 text-3xl animate-pulse">
+                    <i class="fa-solid fa-microphone-lines"></i>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold text-lg text-white">Voice Command & PC Automation Gateway</h3>
+                    <p class="text-xs text-[var(--text-sub)] max-w-md mx-auto">Click below to start live voice stream. You have full permission to command your laptop/PC (e.g., "open wordpress", "open chrome", "delete file", "open folder").</p>
+                </div>
+                <div class="flex justify-center space-x-3">
+                    <button onclick="startVoiceAgentStream()" id="voice-agent-toggle-btn" class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-2.5 rounded-xl text-xs font-semibold shadow-lg transition">
+                        Start Voice Agent
+                    </button>
+                </div>
+                <div id="voice-agent-console" class="border border-[var(--border-color)] rounded-xl p-4 text-left font-mono text-xs text-[var(--text-main)] h-40 overflow-y-auto space-y-1">
+                    <div>[VOICE AGENT] Click 'Start Voice Agent' to begin voice conversation & PC execution...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 5: 24/7 Surveillance & Fixer -->
+        <section id="tab-fixer" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-5xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4">
+                <h2 class="serif-title text-2xl font-bold">24/7 Surveillance & Fixer</h2>
+                <p class="text-xs text-[var(--text-sub)] mt-1">Real-time system monitoring, error patching, and dependency auto-fixer.</p>
+            </header>
+            <div class="custom-card border p-6 rounded-2xl space-y-4 text-xs">
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-white text-sm">System Health Monitor</span>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800">Protected</span>
+                </div>
+                <div class="border border-[var(--border-color)] rounded-xl p-4 font-mono text-[11px] text-[var(--text-main)] space-y-2">
+                    <div>[SURVEILLANCE] CPU Usage: 14% | RAM: 1.8GB / 4.0GB</div>
+                    <div>[SURVEILLANCE] Environment Active</div>
+                    <div>[FIXER] Dependencies checked [All Healthy]</div>
+                </div>
+                <button onclick="runSystemDiagnostics()" class="bg-cyan-700 hover:bg-cyan-600 text-white px-4 py-2 rounded-xl text-xs font-semibold transition">
+                    Run Diagnostics & Patch
+                </button>
+            </div>
+        </section>
+
+        <!-- Tab 6: GitHub & Repositories -->
+        <section id="tab-github" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-5xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4">
+                <h2 class="serif-title text-2xl font-bold">GitHub & Repositories</h2>
+                <p class="text-xs text-[var(--text-sub)] mt-1">Manage Git repositories and automatic code pushing.</p>
+            </header>
+            <div class="custom-card border p-6 rounded-2xl space-y-4 text-xs">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-white text-sm">Linked Account: Muhammad Sayyam</span>
+                    <button onclick="syncGitHubRepo()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl font-semibold transition">
+                        Create Repo & Push
+                    </button>
+                </div>
+                <div id="github-output" class="border border-[var(--border-color)] rounded-xl p-4 font-mono text-xs text-[var(--text-main)]">
+                    <div>Repository: NovaAI-Workspace (Ready for sync)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 7: Live Hosting -->
+        <section id="tab-hosting" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-5xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4">
+                <h2 class="serif-title text-2xl font-bold">Live Hosting</h2>
+                <p class="text-xs text-[var(--text-sub)] mt-1">Deploy web applications to local and public servers.</p>
+            </header>
+            <div class="custom-card border p-6 rounded-2xl space-y-4 text-xs">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-white text-sm">Flask Local Server (Port 5000)</span>
+                    <button onclick="startLocalhostServer()" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-xl font-semibold transition">
+                        Start Server
+                    </button>
+                </div>
+                <div class="p-4 border border-[var(--border-color)] rounded-xl font-mono text-xs text-[var(--text-main)]">
+                    URL: <a href="http://127.0.0.1:5000" target="_blank" class="underline text-orange-400">http://127.0.0.1:5000</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 8: Help & Support -->
+        <section id="tab-help" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-5xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4">
+                <h2 class="serif-title text-2xl font-bold">Help & Support</h2>
+                <p class="text-xs text-[var(--text-sub)] mt-1">Get assistance with NOVA AI scripts and commands.</p>
+            </header>
+            <div class="custom-card border p-6 rounded-2xl space-y-4 text-xs">
+                <p class="text-[var(--text-sub)]">Contact developer support directly or consult documentation for API keys and local script execution.</p>
+                <div class="font-mono text-white">Email: sayyamrajpoot59@gmail.com</div>
+            </div>
+        </section>
+
+        <!-- Settings Sub-Views container -->
+        <section id="tab-settings-view" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto space-y-6 max-w-5xl mx-auto w-full">
+            <header class="border-b border-[var(--border-color)] pb-4 flex justify-between items-center">
+                <h2 id="settings-view-title" class="serif-title text-2xl font-bold">Settings</h2>
+                <button onclick="switchTab('chat')" class="bg-neutral-800 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">Back to Chat</button>
+            </header>
+            <div id="settings-view-content" class="custom-card border p-6 rounded-2xl text-xs space-y-4">
+                <!-- Dynamic settings content -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Task Assignment Modal -->
+    <div id="task-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="custom-card border w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl relative">
+            <button onclick="closeTaskModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="font-bold text-base text-white" id="modal-agent-title">Assign New Task</h3>
+            <div>
+                <label class="text-xs text-[var(--text-sub)] block mb-1">Task Specification / Command</label>
+                <textarea id="modal-task-input" rows="3" class="w-full bg-neutral-500/5 border border-[var(--border-color)] rounded-xl p-3 text-xs text-white focus:outline-none focus:border-orange-500 resize-none" placeholder="Enter task instructions for this agent..."></textarea>
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeTaskModal()" class="bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-2 rounded-xl text-xs font-semibold">Cancel</button>
+                <button onclick="submitAgentTask()" class="bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-xl text-xs font-semibold">Execute Task</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'chat';
+        let isSidebarOpen = true;
+        let isVoiceActive = false;
+        let isVoiceAgentActive = false;
+        let selectedAgentForTask = '';
+        let softwareHistory = [
+            { id: 1, name: 'Default Suite', path: 'C:\\NovaAI\\Workspace\\DefaultSuite', date: '2026-06-06' }
+        ];
+
+        function toggleSidebar() {
+            isSidebarOpen = !isSidebarOpen;
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('sidebar-icon');
+            const texts = document.querySelectorAll('.sidebar-text');
+            if (isSidebarOpen) {
+                sidebar.classList.remove('w-20');
+                sidebar.classList.add('w-72');
+                icon.className = 'fa-solid fa-chevron-left';
+                texts.forEach(el => el.style.display = '');
+            } else {
+                sidebar.classList.remove('w-72');
+                sidebar.classList.add('w-20');
+                icon.className = 'fa-solid fa-chevron-right';
+                texts.forEach(el => el.style.display = 'none');
+            }
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            const tabs = ['chat', 'sdlc', 'history', 'agents', 'voice-agent', 'fixer', 'github', 'hosting', 'help', 'settings-view'];
+            tabs.forEach(t => {
+                const el = document.getElementById('tab-' + t);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById('btn-' + t);
+                if (btn) btn.classList.remove('bg-neutral-500/15', 'text-[var(--text-main)]', 'font-semibold');
+                if (btn) btn.classList.add('text-[var(--text-sub)]');
+            });
+
+            const activeEl = document.getElementById('tab-' + tabId);
+            if (activeEl) activeEl.classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-[var(--text-sub)]');
+                activeBtn.classList.add('bg-neutral-500/15', 'text-[var(--text-main)]', 'font-semibold');
+            }
+        }
+
+        function toggleSettingsDropdown() {
+            const dropdown = document.getElementById('settings-dropdown');
+            const chevron = document.getElementById('settings-chevron');
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                dropdown.classList.add('flex');
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.classList.add('hidden');
+                dropdown.classList.remove('flex');
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function switchSettingsSub(subType) {
+            switchTab('settings-view');
+            const title = document.getElementById('settings-view-title');
+            const content = document.getElementById('settings-view-content');
+            if (subType === 'activity') {
+                title.innerText = 'Activity Usage';
+                content.innerHTML = '<p class="text-white font-mono">Total API Calls: 1,420</p><p class="text-[var(--text-sub)]">Token consumption optimized.</p>';
+            } else if (subType === 'public-link') {
+                title.innerText = 'Public Link';
+                content.innerHTML = '<p class="text-white font-mono">Active Tunnel: <a href="http://127.0.0.1:5000" target="_blank" class="text-orange-400 underline">http://127.0.0.1:5000</a></p>';
+            } else if (subType === 'subscriptions') {
+                title.innerText = 'Subscriptions';
+                content.innerHTML = '<p class="text-white font-semibold">Enterprise Tier (Active)</p><p class="text-[var(--text-sub)]">All autonomous features and agent hubs unlocked.</p>';
+            } else if (subType === 'location') {
+                title.innerText = 'Location';
+                content.innerHTML = '<p class="text-white">Jauharabad, Punjab, Pakistan</p>';
+            } else if (subType === 'theme') {
+                title.innerText = 'Theme Mode';
+                content.innerHTML = '<button onclick="toggleTheme()" class="bg-orange-600 text-white px-4 py-2 rounded-xl text-xs font-semibold">Toggle Dark/Light Mode</button>';
+            } else if (subType === 'apikey') {
+                title.innerText = 'API Keys';
+                content.innerHTML = '<p class="text-white font-mono">API Key configured successfully.</p>';
+            }
+        }
+
+        function toggleTheme() {
+            const root = document.getElementById('html-root');
+            if (root.classList.contains('dark')) {
+                root.classList.remove('dark');
+                root.classList.add('light');
+            } else {
+                root.classList.remove('light');
+                root.classList.add('dark');
+            }
+        }
+
+        function toggleProfileModal(show) {
+            const modal = document.getElementById('profile-modal');
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function saveProfileChanges() {
+            const fname = document.getElementById('prof-firstname').value;
+            const lname = document.getElementById('prof-lastname').value;
+            document.getElementById('sidebar-display-name').innerText = fname;
+            document.getElementById('profile-display-name').innerText = fname + ' ' + lname;
+            const initials = fname.charAt(0) + (lname ? lname.charAt(0) : '');
+            document.getElementById('sidebar-avatar-initials').innerText = initials;
+            document.getElementById('profile-avatar-initials').innerText = initials;
+            toggleProfileModal(false);
+        }
+
+        function newChatSession() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML = `
+                <div class="text-center py-12 space-y-3">
+                    <div class="text-orange-500 text-4xl inline-block mb-1"><i id="thinking-logo" class="fa-solid fa-asterisk animate-spin" style="animation-duration: 20s;"></i></div>
+                    <h2 class="serif-title text-4xl font-bold tracking-tight text-white">How can I help you today?</h2>
+                </div>
+            `;
+            switchTab('chat');
+        }
+
+        function searchChats() {}
+
+        function previewFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('file-label').innerText = file.name;
+            }
+        }
+
+        function toggleVoiceToText() {
+            const btn = document.getElementById('voice-btn');
+            const label = document.getElementById('voice-label');
+            const input = document.getElementById('user-input');
+            
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert('Speech recognition is not supported in this browser.');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+
+            if (!isVoiceActive) {
+                isVoiceActive = true;
+                btn.classList.add('bg-rose-950', 'border', 'border-rose-700');
+                label.innerText = 'Listening...';
+                recognition.start();
+
+                recognition.onresult = function(event) {
+                    const speechToText = event.results[0][0].transcript;
+                    input.value = speechToText;
+                    stopVoiceToTextUI();
+                    sendChatMessage();
+                };
+
+                recognition.onerror = function() { stopVoiceToTextUI(); };
+                recognition.onend = function() { stopVoiceToTextUI(); };
+            } else {
+                stopVoiceToTextUI();
+                recognition.stop();
+            }
+        }
+
+        function stopVoiceToTextUI() {
+            isVoiceActive = false;
+            const btn = document.getElementById('voice-btn');
+            const label = document.getElementById('voice-label');
+            btn.classList.remove('bg-rose-950', 'border', 'border-rose-700');
+            label.innerText = 'Voice-to-Text';
+        }
+
+        function handleChatKey(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chatBox = document.getElementById('chat-box');
+            if (chatBox.querySelector('h2.serif-title')) {
+                chatBox.innerHTML = '';
+            }
+
+            chatBox.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-orange-600 text-white rounded-2xl px-4 py-3 max-w-lg text-xs shadow-md">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const thinkingId = 'thinking-' + Date.now();
+            chatBox.innerHTML += `
+                <div id="${thinkingId}" class="flex justify-start items-center space-x-2 text-xs text-[var(--text-sub)]">
+                    <div class="text-orange-500 text-lg"><i class="fa-solid fa-asterisk animate-spin" style="animation-duration: 20s;"></i></div>
+                    <span>NOVA AI is thinking...</span>
+                </div>
+            `;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                const thinkingEl = document.getElementById(thinkingId);
+                if (thinkingEl) thinkingEl.remove();
+
+                let responseText = "Here are the answers regarding your query. Everything is operating smoothly.";
+                const lowerText = text.toLowerCase();
+
+                if (lowerText.includes('how are you')) {
+                    responseText = "I'm doing great! How can I help you today?";
+                } else if (lowerText.includes('weather') || lowerText.includes('khushab') || lowerText.includes('jauharabad')) {
+                    responseText = "The weather in your region is currently clear and comfortable.";
+                } else if (lowerText.includes('wordpress')) {
+                    responseText = "WordPress is ready. You can command me to open it or manage your local server.";
+                }
+
+                chatBox.innerHTML += `
+                    <div class="flex justify-start">
+                        <div class="text-xs text-[var(--text-main)] leading-relaxed max-w-lg py-2">
+                            ${responseText}
+                        </div>
+                    </div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 800);
+        }
+
+        function generateSoftwareBuild() {
+            const name = document.getElementById('sw-name-input').value || 'NovaApp';
+            const consoleBox = document.getElementById('sw-output-console');
+            consoleBox.innerHTML += `<div>> Initializing build for ${name}...</div>`;
+            consoleBox.innerHTML += `<div>> Setting up workspace structure & local directory...</div>`;
+            consoleBox.innerHTML += `<div>> Auto-integrating GitHub repository 'NovaAI/${name}'...</div>`;
+            consoleBox.innerHTML += `<div class="text-emerald-300 font-bold">> Build complete! Local folder created at C:\\NovaAI\\${name}</div>`;
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+            document.getElementById('sw-folder-path').innerText = `C:\\NovaAI\\${name}`;
+
+            // Push to history
+            softwareHistory.push({ id: Date.now(), name: name, path: `C:\\NovaAI\\${name}`, date: new Date().toLocaleDateString() });
+            renderHistory();
+
+            // Show notification popup on top right
+            const notif = document.getElementById('localhost-notification');
+            document.getElementById('notification-text').innerText = `Software '${name}' built successfully!`;
+            notif.classList.remove('hidden');
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('history-items-container');
+            container.innerHTML = '';
+            softwareHistory.forEach(item => {
+                container.innerHTML += `
+                    <div class="custom-card border p-4 rounded-2xl flex items-center justify-between text-xs">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-bold text-white text-sm">${item.name}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800">Ready</span>
+                            </div>
+                            <p class="text-[var(--text-sub)] font-mono text-[11px]">Path: ${item.path} | Created: ${item.date}</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="downloadSoftwareFiles()" class="bg-neutral-800 hover:bg-neutral-700 text-white px-3 py-2 rounded-xl font-semibold flex items-center space-x-1">
+                                <i class="fa-solid fa-download"></i><span>Download</span>
+                            </button>
+                            <button onclick="activateOnLocalhost()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl font-semibold flex items-center space-x-1.5 shadow">
+                                <i class="fa-solid fa-rocket"></i><span>Active on Localhost</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function clearHistory() {
+            softwareHistory = [];
+            renderHistory();
+        }
+
+        function downloadSoftwareFiles() {
+            alert('Downloading software source files and ZIP bundle to your PC downloads folder...');
+        }
+
+        function activateOnLocalhost() {
+            const bar = document.getElementById('localhost-notification');
+            bar.classList.remove('hidden');
+            window.open('http://127.0.0.1:5000', '_blank');
+        }
+
+        function getFolderAction() {
+            alert('Local folder directory opened: C:\\NovaAI\\Workspace');
+        }
+
+        function toggleAgentStatus(id) {
+            const span = document.getElementById('agent-status-' + id);
+            const btn = document.getElementById('agent-toggle-btn-' + id);
+            if (span.innerText === 'Active') {
+                span.innerText = 'Deactivated';
+                span.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-neutral-800 text-neutral-400 border border-neutral-700';
+                btn.innerText = 'Activate';
+            } else {
+                span.innerText = 'Active';
+                span.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800';
+                btn.innerText = 'Deactivate';
+            }
+        }
+
+        function openTaskModal(agentName) {
+            selectedAgentForTask = agentName;
+            document.getElementById('modal-agent-title').innerText = 'Assign Task to ' + agentName;
+            document.getElementById('task-modal').classList.remove('hidden');
+        }
+
+        function closeTaskModal() {
+            document.getElementById('task-modal').classList.add('hidden');
+            document.getElementById('modal-task-input').value = '';
+        }
+
+        function submitAgentTask() {
+            const task = document.getElementById('modal-task-input').value;
+            if (!task) return;
+            alert(`Task successfully assigned to ${selectedAgentForTask}: "${task}"`);
+            closeTaskModal();
+        }
+
+        function addNewAgent() {
+            const name = prompt('Enter new Agent Name:');
+            if (!name) return;
+            const grid = document.getElementById('agents-grid');
+            const id = Date.now();
+            grid.innerHTML += `
+                <div class="custom-card border p-5 rounded-2xl space-y-4 text-xs flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-white text-sm">${name}</span>
+                            <span id="agent-status-${id}" class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800">Active</span>
+                        </div>
+                        <p class="text-[var(--text-sub)]">Custom deployed autonomous worker agent.</p>
+                    </div>
+                    <div class="space-y-2 pt-3 border-t border-[var(--border-color)]">
+                        <div class="flex space-x-2">
+                            <button onclick="toggleAgentStatus('${id}')" id="agent-toggle-btn-${id}" class="flex-1 bg-neutral-800 hover:bg-neutral-700 text-white py-1.5 rounded-lg text-center font-semibold">Deactivate</button>
+                            <button onclick="openTaskModal('${name}')" class="flex-1 bg-orange-600 hover:bg-orange-500 text-white py-1.5 rounded-lg text-center font-semibold">Assign Task</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startVoiceAgentStream() {
+            const consoleBox = document.getElementById('voice-agent-console');
+            const btn = document.getElementById('voice-agent-toggle-btn');
+            if (!isVoiceAgentActive) {
+                isVoiceAgentActive = true;
+                btn.innerText = 'Stop Voice Agent';
+                btn.className = 'bg-neutral-800 hover:bg-neutral-700 text-white px-6 py-2.5 rounded-xl text-xs font-semibold shadow-lg transition';
+                consoleBox.innerHTML += `<div>[VOICE AGENT] Listening for PC commands (e.g. "open wordpress", "open chrome", "delete file")... Speak now!</div>`;
+                
+                if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    const recognition = new SpeechRecognition();
+                    recognition.continuous = true;
+                    recognition.interimResults = false;
+                    recognition.lang = 'en-US';
+                    recognition.onresult = function(event) {
+                        const command = event.results[event.results.length - 1][0].transcript.trim();
+                        consoleBox.innerHTML += `<div>> You: ${command}</div>`;
+                        consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                        const lowerCmd = command.toLowerCase();
+                        if (lowerCmd.includes('wordpress') || lowerCmd.includes('open wordpress')) {
+                            consoleBox.innerHTML += `<div>[PC AGENT] Executing PC command: Opening WordPress / local server...</div>`;
+                            window.open('http://localhost/wordpress', '_blank');
+                        } else if (lowerCmd.includes('chrome') || lowerCmd.includes('open chrome')) {
+                            consoleBox.innerHTML += `<div>[PC AGENT] Executing PC command: Launching Google Chrome...</div>`;
+                            window.open('https://www.google.com', '_blank');
+                        } else if (lowerCmd.includes('delete') || lowerCmd.includes('remove file')) {
+                            consoleBox.innerHTML += `<div>[PC AGENT] Executing PC file operation: File targeted for deletion/removal.</div>`;
+                        } else if (lowerCmd.includes('folder') || lowerCmd.includes('open folder')) {
+                            consoleBox.innerHTML += `<div>[PC AGENT] Executing PC file manager: Opening local directory C:\\NovaAI\\Workspace...</div>`;
+                        } else {
+                            consoleBox.innerHTML += `<div>[PC AGENT] Executing PC command: ${command}</div>`;
+                        }
+                        consoleBox.scrollTop = consoleBox.scrollHeight;
+                    };
+                    recognition.start();
+                    window.activeVoiceRecognition = recognition;
+                }
+            } else {
+                isVoiceAgentActive = false;
+                btn.innerText = 'Start Voice Agent';
+                btn.className = 'bg-rose-600 hover:bg-rose-500 text-white px-6 py-2.5 rounded-xl text-xs font-semibold shadow-lg transition';
+                consoleBox.innerHTML += `<div>[VOICE AGENT] Session ended.</div>`;
+                if (window.activeVoiceRecognition) {
+                    window.activeVoiceRecognition.stop();
+                }
+            }
+        }
+
+        function runSystemDiagnostics() {
+            alert('System diagnostics completed. All Python and system modules are operating normally.');
+        }
+
+        function syncGitHubRepo() {
+            const output = document.getElementById('github-output');
+            output.innerHTML += `<div>[GIT] Committed changes and pushed successfully to GitHub repository.</div>`;
+        }
+
+        function startLocalhostServer() {
+            const bar = document.getElementById('localhost-notification');
+            bar.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

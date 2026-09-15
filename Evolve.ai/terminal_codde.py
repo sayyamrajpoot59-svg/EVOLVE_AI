@@ -1,0 +1,1 @@
+"C:/Users/UCC/AppData/Local/Programs/Python/Python38/python.exe c:/Users/UCC/Desktop/Evolve.ai/app.py"
